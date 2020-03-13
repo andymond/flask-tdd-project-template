@@ -5,10 +5,11 @@
 
 ## Quickstart
   - Pull or fork repo into whatever project you'd like to start update the docker file
+  - Projects will pulled with & be referred to by "myproject", but you can rename the project: `python manage.py rename_project <cool-new-project-name>`
   - Create the container: `docker-compose up -d --build` and check it out locally: [localhost:5001/ping](localhost:5001/ping)
   - Create the db: `$ docker-compose exec myproject python manage.py recreate_db`
   To run the basic setup tests:
-  `$ docker-compose exec my_project pytest 'project/tests'`
+  `$ docker-compose exec myproject pytest 'project/tests'`
   To keep your code
 
 ## Dependencies
