@@ -27,17 +27,17 @@
 ## Deployment
   This app is set up to deploy to Heroku with a few simple steps:
   ### Setup Heroku
-    - Get the Heroku cli
-    - Login to your Heroku account from the command line `$ heroku login`
-    - Create your heroku app `$ heroku create`
-    - Register the docker container to Heroku's registry `$ heroku container:login`
-    - Setup your Heroku postgres instance `$ heroku addons:create heroku-postresql:hobby-dev` (or whatever Heroku plan you intend to use)
+  - Get the Heroku cli
+  - Login to your Heroku account from the command line `$ heroku login`
+  - Create your heroku app `$ heroku create`
+  - Register the docker container to Heroku's registry `$ heroku container:login`
+  - Setup your Heroku postgres instance `$ heroku addons:create heroku-postresql:hobby-dev` (or whatever Heroku plan you intend to use)
   ### Build and tag Docker Image
-    - Build prod Docker image: `docker build -f Dockerfile.prod -d registry.heroku.com/<your-heroku-app-name/web .`
-    - Push the image to the registry with a 'latest' tag: `docker push registry.heroku.com/<your-heroku-app-name/web:latest`
-    - Release it! `heroku container:release web`
-    - Push the app to deploy
-    - Open the app and enjoy! `$ heroku open`
+  - Build prod Docker image: `docker build -f Dockerfile.prod -d registry.heroku.com/<your-heroku-app-name/web .`
+  - Push the image to the registry with a 'latest' tag: `docker push registry.heroku.com/<your-heroku-app-name/web:latest`
+  - Release it! `heroku container:release web`
+  - Push the app to deploy
+  - Open the app and enjoy! `$ heroku open`
 
 ## Testing
   - `docker-compose up -d --build`
