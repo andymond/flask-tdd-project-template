@@ -11,7 +11,7 @@ sample_item_serializer = sample_items_namespace.model(
         "name": fields.String(required=True),
         "created_at": fields.String(required=True),
         "updated_at": fields.String,
-    }
+    },
 )
 
 

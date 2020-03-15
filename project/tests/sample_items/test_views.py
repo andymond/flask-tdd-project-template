@@ -4,7 +4,9 @@ from project.services.db import base as db_service
 
 
 def test_get_all_sample_items(test_app, test_database):
-    items = [db_service.create(SampleItem, name=name) for name in ["item1", "item2", "item3"]]
+    items = [
+        db_service.create(SampleItem, name=name) for name in ["item1", "item2", "item3"]
+    ]
     client = test_app.test_client()
     resp = client.get("/sample_items")
     data = json.loads(resp.data.decode())
