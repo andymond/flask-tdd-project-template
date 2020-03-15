@@ -52,6 +52,12 @@ def test_create(test_app, test_database):
     assert len(db_service.all(Dummy)) == 1
 
 
+def test_update(test_app, test_database):
+    cooldummy = db_service.create(Dummy, name="cooldummy")
+    updated = db_service.update(cooldummy, name="supercooldummy")
+    assert updated.name == "supercooldummy"
+
+
 def test_destroy(test_app, test_database):
     seed_dummies()
     assert len(db_service.all(Dummy)) == 3
