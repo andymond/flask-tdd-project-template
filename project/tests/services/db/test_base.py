@@ -25,9 +25,10 @@ def test_all(test_app, test_database):
 
 def test_find(test_app, test_database):
     seed_dummies()
-    pass
-    # dummy1 = db_service.find(Dummy, 1)
-    # assert dummy1.name == "dummy1"
+    dummy1, dummy2, dummy3 = [db_service.find(Dummy, id) for id in [1, 2, 3]]
+    assert dummy1.name == "dummy1"
+    assert dummy2.name == "dummy2"
+    assert dummy3.name == "dummy3"
 
 
 def test_find_by(test_app, test_database):
