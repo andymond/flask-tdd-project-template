@@ -56,7 +56,8 @@ def test_update(test_app, test_database):
     cooldummy = db_service.create(Dummy, name="cooldummy")
     updated = db_service.update(cooldummy, name="supercooldummy")
     assert updated.name == "supercooldummy"
-
+    persisted_update = db_service.find_by(Dummy, name="supercooldummy")
+    assert cooldummy.id == persisted_update.id
 
 def test_destroy(test_app, test_database):
     seed_dummies()
