@@ -1,5 +1,5 @@
 from project import db
-from project.services.db import base
+from project.services.db.base import get_all
 import pytest
 
 from sqlalchemy import func
@@ -18,7 +18,8 @@ def seed_dummies():
 
 def test_all(test_app, test_database):
     seed_dummies()
-    pass
+    dummies = get_all(Dummy)
+    assert dummies.count == 3
 
 
 def test_find(test_app, test_database):
