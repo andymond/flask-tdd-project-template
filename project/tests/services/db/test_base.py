@@ -45,8 +45,10 @@ def test_find_by(test_app, test_database):
 
 
 def test_create(test_app, test_database):
-    pass
-
+    cooldummy = db_service.create(Dummy, name="cooldummy")
+    assert cooldummy.id == 1
+    assert cooldummy.name == "cooldummy"
+    assert len(db_service.all(Dummy)) == 1
 
 def test_destroy(test_app, test_database):
     pass
