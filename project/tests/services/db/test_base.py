@@ -1,8 +1,5 @@
 from project import db
 from project.services.db import base as db_service
-import pytest
-
-from sqlalchemy import func
 
 
 class Dummy(db.Model):
@@ -58,6 +55,7 @@ def test_update(test_app, test_database):
     assert updated.name == "supercooldummy"
     persisted_update = db_service.find_by(Dummy, name="supercooldummy")
     assert cooldummy.id == persisted_update.id
+
 
 def test_destroy(test_app, test_database):
     seed_dummies()

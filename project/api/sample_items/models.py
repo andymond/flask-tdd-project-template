@@ -1,6 +1,7 @@
 from project import db
 from sqlalchemy.sql import func
 
+
 class SampleItem(db.Model):
     __tablename__ = "sample_items"
 

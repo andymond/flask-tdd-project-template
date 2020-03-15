@@ -1,5 +1,5 @@
 from project import db
-from sqlalchemy import update
+
 
 def all(cls):
     return cls.query.all()

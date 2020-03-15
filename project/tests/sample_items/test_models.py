@@ -11,5 +11,5 @@ def test_valid_sample_item(test_app, test_database):
 
 
 def test_name_required(test_app, test_database):
-    with pytest.raises(IntegrityError) as butts:
+    with pytest.raises(IntegrityError):
         db_service.create(SampleItem, name=None)
