@@ -36,11 +36,11 @@ def test_find(test_app, test_database):
 
 def test_find_by(test_app, test_database):
     seed_dummies()
-    dummy1 = db_service.find_by(Dummy, { id: 1 })
-    dummy2 = db_service.find_by(Dummy, { name: "dummy2"} )
+    dummy1 = db_service.find_by(Dummy, id=1)
+    dummy2 = db_service.find_by(Dummy, name="dummy2")
     assert dummy1.id == 1
     assert dummy1.name == "dummy1"
-    assert dummy1.id == 2
+    assert dummy2.id == 2
     assert dummy2.name == "dummy2"
 
 

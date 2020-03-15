@@ -5,3 +5,6 @@ def all(cls):
 
 def find(cls, id):
     return cls.query.filter_by(id=id).first()
+
+def find_by(cls, **kwargs):
+    return cls.query.filter_by(**kwargs).first()
