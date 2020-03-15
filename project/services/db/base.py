@@ -8,3 +8,9 @@ def find(cls, id):
 
 def find_by(cls, **kwargs):
     return cls.query.filter_by(**kwargs).first()
+
+def create(cls, **kwargs):
+    record = cls(**kwargs)
+    db.session.add(record)
+    db.session.commit()
+    return record
