@@ -14,3 +14,8 @@ def create(cls, **kwargs):
     db.session.add(record)
     db.session.commit()
     return record
+
+def destroy(record):
+    db.session.delete(record)
+    db.session.commit()
+    return record

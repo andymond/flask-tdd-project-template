@@ -17,6 +17,7 @@ def seed_dummies():
         db.session.add(dummy)
     db.session.commit()
 
+
 def test_all(test_app, test_database):
     seed_dummies()
     dummies = db_service.all(Dummy)
@@ -50,5 +51,12 @@ def test_create(test_app, test_database):
     assert cooldummy.name == "cooldummy"
     assert len(db_service.all(Dummy)) == 1
 
+
 def test_destroy(test_app, test_database):
-    pass
+    seed_dummies()
+    assert len(db_service.all(Dummy)) == 3
+    doomy = db_service.find(Dummy, 1)
+    remnants = db_service.destroy(doomy)
+    assert remnants.id == 1
+    assert remnants.name == "dummy1"
+    assert len(db_service.all(Dummy)) == 2
