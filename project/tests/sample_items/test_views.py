@@ -38,7 +38,7 @@ def test_create_valid_sample_item(test_app, test_database):
         content_type="application/json",
     )
     data = json.loads(resp.data.decode())
-    assert resp.status_code == 200
+    assert resp.status_code == 201
 
 
 def test_create_invalid_sample_item(test_app, test_database):
