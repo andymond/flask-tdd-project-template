@@ -1,8 +1,26 @@
 {% extends 'admin/master.html' %}
 {% block body %}
-    <h1>SUP BITCHES</h1>
-    <form method="POST" action="/">
-    {{ form.csrf_token }}
-    {{ form.name.label }} {{ form.name(size=20) }}
-    <input type="submit" value="Go">
+    <div class="row">
+      <h1 class="col-md-offset-1">Log In</h1>
+    </div>
+    <form method="POST" action="/" class = "admin-form form-horizontal">
+      {{ form.csrf_token }}
+      <div class="form-group">
+        {{ form.username.label(class_="col-md-2 control-label") }}
+        <div class="col-md-6">
+          {{ form.username(class_="form-control") }}
+        </div>
+      </div>
+      <div class="form-group">
+         {{ form.password.label(class_="col-md-2 control-label") }}
+        <div class="col-md-6">
+          {{ form.password(class_="form-control") }}
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-md-offset-2 col-md-10 submit-row">
+          <input type="submit" value="Log In", class="btn btn-primary">
+        </div>
+      </div>
+    </form>
 {% endblock %}
