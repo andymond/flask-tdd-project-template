@@ -19,7 +19,7 @@ def test_get_all_sample_items_valid(test_app, test_database):
 
 
 def test_get_single_sample_item_valid(test_app, test_database):
-    item = db_service.create(SampleItem, name= "item1")
+    item = db_service.create(SampleItem, name="item1")
     client = test_app.test_client()
     resp = client.get(f"/sample_items/{item.id}")
     data = json.loads(resp.data.decode())
@@ -28,18 +28,18 @@ def test_get_single_sample_item_valid(test_app, test_database):
 
 
 def test_get_single_sample_item_invalid(test_app, test_database):
-    item = db_service.create(SampleItem, name= "item1")
     client = test_app.test_client()
     resp = client.get(f"/sample_items/0")
     data = json.loads(resp.data.decode())
     assert resp.status_code == 404
+    assert "Sample Item #0 not found" in data["message"]
 
 
 def test_create_sample_item_valid(test_app, test_database):
     client = test_app.test_client()
     resp = client.post(
         "/sample_items",
-        data=json.dumps({ "name": "coolname" }),
+        data=json.dumps({"name": "coolname"}),
         content_type="application/json",
     )
     data = json.loads(resp.data.decode())
@@ -77,12 +77,7 @@ def test_update_sample_item_valid(test_app, test_database):
     [
         [1, {}, 400, "Input payload validation failed"],
         [1, {"badkey": "updateditem"}, 400, "Input payload validation failed"],
-        [
-            999,
-            {"name": "mrdoesntexist"},
-            404,
-            "Sample Item #999 not found",
-        ],
+        [999, {"name": "mrdoesntexist"}, 404, "Sample Item #999 not found",],
     ],
 )
 def test_update_user_invalid(
@@ -90,7 +85,9 @@ def test_update_user_invalid(
 ):
     client = test_app.test_client()
     resp = client.put(
-        f"/sample_items/{item_id}", data=json.dumps(payload), content_type="application/json",
+        f"/sample_items/{item_id}",
+        data=json.dumps(payload),
+        content_type="application/json",
     )
     data = json.loads(resp.data.decode())
     assert resp.status_code == status_code

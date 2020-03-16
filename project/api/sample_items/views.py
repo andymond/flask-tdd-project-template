@@ -21,15 +21,11 @@ class SampleItems(Resource):
     def get(self):
         return db_service.all(SampleItem), 200
 
-
     @sample_items_namespace.expect(sample_item, validate=True)
     def post(self):
         post_data = request.get_json()
-        try:
-            user = db_service.create(SampleItem, **post_data)
-            return { "message": "Resource created" }, 201
-        except:
-            sample_items_namespace.abort(500, "failed to create resource")
+        db_service.create(SampleItem, **post_data)
+        return {"message": "Resource created"}, 201
 
 
 class SampleItemById(Resource):
@@ -40,7 +36,6 @@ class SampleItemById(Resource):
             sample_items_namespace.abort(404, f"Sample Item #{siid} not found")
         return sample_item, 200
 
-
     @sample_items_namespace.expect(sample_item, validate=True)
     @sample_items_namespace.marshal_with(sample_item)
     def put(self, siid):
@@ -48,22 +43,15 @@ class SampleItemById(Resource):
         if not sample_item:
             sample_items_namespace.abort(404, f"Sample Item #{siid} not found")
         put_data = request.get_json()
-        try:
-            updated_item = db_service.update(SampleItem, **put_data)
-            return updated_item
-        except:
-            sample_items_namespace.abort(500, "failed to update resource")
-
+        updated_item = db_service.update(SampleItem, **put_data)
+        return updated_item
 
     def delete(self, siid):
         sample_item = db_service.find(SampleItem, siid)
         if not sample_item:
             sample_items_namespace.abort(404, f"Sample Item #{siid} not found")
-        try:
-            db_service.destroy(sample_item)
-            return { "message": f"Deleted Sample Item #{siid}"}
-        except:
-            sample_items_namespace.abort(500, "failed to delete resource")
+        db_service.destroy(sample_item)
+        return {"message": f"Deleted Sample Item #{siid}"}
 
 
 sample_items_namespace.add_resource(SampleItems, "")
