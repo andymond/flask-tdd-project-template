@@ -1,4 +1,5 @@
-from project import db
+from project import, login_manager
+
 from sqlalchemy.sql import func
 from passlib.apps import custom_app_context as pwd_context
 

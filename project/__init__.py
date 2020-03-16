@@ -2,12 +2,13 @@ import os
 
 from flask import Flask
 from flask_admin import Admin
+from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 
 
 db = SQLAlchemy()
-# login_manager = LoginManager()
 admin = Admin(template_mode="bootstrap3", url=os.environ.get("ADMIN_NAMESPACE") or "/admin/")
+login_manager = LoginManager()
 
 
 def create_app():
@@ -17,7 +18,11 @@ def create_app():
     app.config.from_object(app_settings)
 
     db.init_app(app)
-    # login_manager.init_app(app)
+    login_manager.init_app(app)
+    @login_manager.user_loader
+    def load_user(user_id):
+        AdminUser.query.get(id=user_id)
+
     admin.init_app(app)
 
     from project.api import api
