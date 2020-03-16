@@ -111,4 +111,4 @@ def test_delete_user_invalid(test_app, test_database):
     resp = client.delete(f"/sample_items/0")
     data = json.loads(resp.data.decode())
     assert resp.status_code == 404
-    assert f"Sample Item 0 not found" in data["message"]
+    assert f"Sample Item #0 not found" in data["message"]

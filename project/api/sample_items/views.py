@@ -55,5 +55,16 @@ class SampleItemById(Resource):
             sample_items_namespace.abort(500, "failed to update resource")
 
 
+    def delete(self, siid):
+        sample_item = db_service.find(SampleItem, siid)
+        if not sample_item:
+            sample_items_namespace.abort(404, f"Sample Item #{siid} not found")
+        try:
+            db_service.destroy(sample_item)
+            return { "message": f"Deleted Sample Item #{siid}"}
+        except:
+            sample_items_namespace.abort(500, "failed to delete resource")
+
+
 sample_items_namespace.add_resource(SampleItems, "")
 sample_items_namespace.add_resource(SampleItemById, "/<int:siid>")
