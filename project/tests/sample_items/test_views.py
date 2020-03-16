@@ -1,6 +1,7 @@
 import json
 from project.api.sample_items.models import SampleItem
 from project.services.db import base as db_service
+import pytest
 
 
 def test_get_all_sample_items(test_app, test_database):
@@ -46,20 +47,45 @@ def test_create_invalid_sample_item(test_app, test_database):
     client = test_app.test_client()
     resp = client.post(
         "/sample_items",
-        data=json.dumps({ "bad_key": "coolvalue" }),
+        data=json.dumps({"bad_key": "coolvalue"}),
         content_type="application/json",
     )
     data = json.loads(resp.data.decode())
     assert resp.status_code == 400
     assert "Input payload validation failed" in data["message"]
 
-#
-# def test_update_valid_sample_item(test_app, test_database):
-#     client = test_app.test_client()
-#     resp = client.post(
-#         f"/sample_items/{item.id}",
-#         data=json.dumps({ "name": "coolvalue" }),
-#         content_type="application/json",
-#     )
-#     data = json.loads(resp.data.decode())
-#     assert resp.status_code == 200
+
+def test_update_valid_sample_item(test_app, test_database):
+    item = db_service.create(SampleItem, name="item1")
+    client = test_app.test_client()
+    resp = client.post(
+        f"/sample_items/{item.id}",
+        data=json.dumps({"name": "coolvalue"}),
+        content_type="application/json",
+    )
+    data = json.loads(resp.data.decode())
+    assert resp.status_code == 200
+
+@pytest.mark.parametrize(
+    "item_id, payload, status_code, message",
+    [
+        [1, {}, 400, "Input payload validation failed"],
+        [1, {"badkey": "updateditem"}, 400, "Input payload validation failed"],
+        [
+            999,
+            {"name": "mrdoesntexist"},
+            404,
+            "Item 999 does not exist",
+        ],
+    ],
+)
+def test_update_user_invalid(
+    test_app, test_database, item_id, payload, status_code, message
+):
+    client = test_app.test_client()
+    resp = client.put(
+        f"/sample_items/{item_id}", data=json.dumps(payload), content_type="application/json",
+    )
+    data = json.loads(resp.data.decode())
+    assert resp.status_code == status_code
+    assert message in data["message"]
