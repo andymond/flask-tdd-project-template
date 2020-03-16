@@ -4,7 +4,7 @@ from project.services.db import base as db_service
 import pytest
 
 
-def test_get_all_sample_items(test_app, test_database):
+def test_get_all_sample_items_valid(test_app, test_database):
     items = [
         db_service.create(SampleItem, name=name) for name in ["item1", "item2", "item3"]
     ]
@@ -18,7 +18,7 @@ def test_get_all_sample_items(test_app, test_database):
     assert data[2]["name"] == items[2].name
 
 
-def test_get_single_sample_item(test_app, test_database):
+def test_get_single_sample_item_valid(test_app, test_database):
     item = db_service.create(SampleItem, name= "item1")
     client = test_app.test_client()
     resp = client.get(f"/sample_items/{item.id}")
@@ -26,12 +26,16 @@ def test_get_single_sample_item(test_app, test_database):
     assert resp.status_code == 200
     assert data["name"] == item.name
 
+
+def test_get_single_sample_item_invalid(test_app, test_database):
+    item = db_service.create(SampleItem, name= "item1")
+    client = test_app.test_client()
     resp = client.get(f"/sample_items/0")
     data = json.loads(resp.data.decode())
     assert resp.status_code == 404
 
 
-def test_create_valid_sample_item(test_app, test_database):
+def test_create_sample_item_valid(test_app, test_database):
     client = test_app.test_client()
     resp = client.post(
         "/sample_items",
@@ -43,7 +47,7 @@ def test_create_valid_sample_item(test_app, test_database):
     assert "Resource created" in data["message"]
 
 
-def test_create_invalid_sample_item(test_app, test_database):
+def test_create_sample_item_invalid(test_app, test_database):
     client = test_app.test_client()
     resp = client.post(
         "/sample_items",
@@ -55,7 +59,7 @@ def test_create_invalid_sample_item(test_app, test_database):
     assert "Input payload validation failed" in data["message"]
 
 
-def test_update_valid_sample_item(test_app, test_database):
+def test_update_sample_item_valid(test_app, test_database):
     item = db_service.create(SampleItem, name="item1")
     client = test_app.test_client()
     resp = client.put(
@@ -66,6 +70,7 @@ def test_update_valid_sample_item(test_app, test_database):
     data = json.loads(resp.data.decode())
     assert resp.status_code == 200
     assert "coolvalue" in data["name"]
+
 
 @pytest.mark.parametrize(
     "item_id, payload, status_code, message",
@@ -90,3 +95,20 @@ def test_update_user_invalid(
     data = json.loads(resp.data.decode())
     assert resp.status_code == status_code
     assert message in data["message"]
+
+
+def test_delete_user_valid(test_app, test_database):
+    item = db_service.create(SampleItem, name="item1")
+    client = test_app.test_client()
+    resp = client.delete(f"/sample_items/{item.id}")
+    data = json.loads(resp.data.decode())
+    assert resp.status_code == 200
+    assert f"Deleted Sample Item #{item.id}" in data["message"]
+
+
+def test_delete_user_invalid(test_app, test_database):
+    client = test_app.test_client()
+    resp = client.delete(f"/sample_items/0")
+    data = json.loads(resp.data.decode())
+    assert resp.status_code == 404
+    assert f"Sample Item 0 not found" in data["message"]
