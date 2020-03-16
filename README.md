@@ -51,7 +51,7 @@
 ### code maintenance
   - Have included flake8, black & isort to keep your python looking tight
   - run `$ docker-compose exec myproject flake8 project` for code convention linting
-  - run `$ docker-compose exec myproject black project --check` for code format enforcement
-  - run `$ docker-compose exec myproject /bin/sh -c "isort project/*/*.py --check-only"` to organize imports
+  - run `$ docker-compose exec myproject black project` for code format enforcement (append `--check` to check before reformatting)
+  - run `$ docker-compose exec myproject /bin/sh -c "isort project/*/*.py"` to organize imports (append `--check-only` to filename string to check before reorganzing)
 ### gitignore
   - I've included a basic .gitignore here, but check it out to make sure what it's ignoring is inline with your preferred workflow, i.e. I'm used to naming my virtual environment venv, so that's ignored, not env or some other name
