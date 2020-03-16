@@ -16,6 +16,7 @@ def test_get_all_sample_items(test_app, test_database):
     assert data[1]["name"] == items[1].name
     assert data[2]["name"] == items[2].name
 
+
 def test_get_single_sample_item(test_app, test_database):
     item = db_service.create(SampleItem, name= "item1")
     client = test_app.test_client()
@@ -27,3 +28,25 @@ def test_get_single_sample_item(test_app, test_database):
     resp = client.get(f"/sample_items/0")
     data = json.loads(resp.data.decode())
     assert resp.status_code == 404
+
+
+def test_create_valid_sample_item(test_app, test_database):
+    client = test_app.test_client()
+    resp = client.post(
+        "/sample_items",
+        data=json.dumps({ "name": "coolname" }),
+        content_type="application/json",
+    )
+    data = json.loads(resp.data.decode())
+    assert resp.status_code == 200
+
+
+def test_create_invalid_sample_item(test_app, test_database):
+    client = test_app.test_client()
+    resp = client.post(
+        "/sample_items",
+        data=json.dumps({ "bad_key": "coolvalue" }),
+        content_type="application/json",
+    )
+    data = json.loads(resp.data.decode())
+    assert resp.status_code == 400
