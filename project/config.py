@@ -18,4 +18,5 @@ class TestingConfig(BaseConfig):
 
 
 class ProductionConfig(BaseConfig):
+    SECRET_KEY = os.environ.get("APP_SECRET")
     SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
