@@ -39,6 +39,7 @@ def test_create_valid_sample_item(test_app, test_database):
     )
     data = json.loads(resp.data.decode())
     assert resp.status_code == 201
+    assert "Resource created" in data["message"]
 
 
 def test_create_invalid_sample_item(test_app, test_database):
@@ -50,3 +51,15 @@ def test_create_invalid_sample_item(test_app, test_database):
     )
     data = json.loads(resp.data.decode())
     assert resp.status_code == 400
+    assert "Input payload validation failed" in data["message"]
+
+#
+# def test_update_valid_sample_item(test_app, test_database):
+#     client = test_app.test_client()
+#     resp = client.post(
+#         f"/sample_items/{item.id}",
+#         data=json.dumps({ "name": "coolvalue" }),
+#         content_type="application/json",
+#     )
+#     data = json.loads(resp.data.decode())
+#     assert resp.status_code == 200

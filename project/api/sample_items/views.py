@@ -26,9 +26,9 @@ class SampleItems(Resource):
         post_data = request.get_json()
         try:
             user = db_service.create(SampleItem, **post_data)
-            return { "Success": "Resource Created"}, 201
+            return { "message": "Resource created" }, 201
         except:
-            sample_items_namespace.abort(400, f"Failed To Create Resource")
+            sample_items_namespace.abort(400, "failed to create resource")
 
 
 class SampleItemById(Resource):
