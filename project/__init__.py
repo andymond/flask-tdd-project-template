@@ -6,6 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 db = SQLAlchemy()
+# login_manager = LoginManager()
 admin = Admin(template_mode="bootstrap3", url=os.environ.get("ADMIN_NAMESPACE") or "/admin/")
 
 
@@ -16,6 +17,7 @@ def create_app():
     app.config.from_object(app_settings)
 
     db.init_app(app)
+    # login_manager.init_app(app)
     admin.init_app(app)
 
     from project.api import api
