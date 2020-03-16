@@ -1,4 +1,6 @@
-from project import db
+from project import db, admin
+from project.api.sample_items.admin import SampleItemsAdminView
+
 from sqlalchemy.sql import func
 
 
@@ -10,3 +12,5 @@ class SampleItem(db.Model):
     created_at = db.Column(db.DateTime, server_default=func.now())
     updated_at = db.Column(db.DateTime, onupdate=func.now())
     deleted_at = db.Column(db.DateTime, default=None)
+
+admin.add_view(SampleItemsAdminView(SampleItem, db.session, endpoint="sample_items"))
