@@ -58,13 +58,14 @@ def test_create_invalid_sample_item(test_app, test_database):
 def test_update_valid_sample_item(test_app, test_database):
     item = db_service.create(SampleItem, name="item1")
     client = test_app.test_client()
-    resp = client.post(
+    resp = client.put(
         f"/sample_items/{item.id}",
         data=json.dumps({"name": "coolvalue"}),
         content_type="application/json",
     )
     data = json.loads(resp.data.decode())
     assert resp.status_code == 200
+    assert "coolvalue" in data["name"]
 
 @pytest.mark.parametrize(
     "item_id, payload, status_code, message",
@@ -75,7 +76,7 @@ def test_update_valid_sample_item(test_app, test_database):
             999,
             {"name": "mrdoesntexist"},
             404,
-            "Item 999 does not exist",
+            "Sample Item #999 not found",
         ],
     ],
 )
