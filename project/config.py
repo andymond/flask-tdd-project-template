@@ -4,7 +4,7 @@ import os
 class BaseConfig:
     TESTING = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    FLASK_ADMIN_SWATCH = "cerulean"
+    FLASK_ADMIN_SWATCH = "default"
     SECRET_KEY = "my_precious"
 
 

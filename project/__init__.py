@@ -6,7 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 db = SQLAlchemy()
-admin = Admin(template_mode="bootstrap3")
+admin = Admin(template_mode="bootstrap3", url=os.environ.get("ADMIN_NAMESPACE") or "/admin/")
 
 
 def create_app():

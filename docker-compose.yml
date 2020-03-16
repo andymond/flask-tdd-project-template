@@ -15,6 +15,7 @@ services:
       - FLASK_APP=project/__init__.py
       - FLASK_ENV=development
       - APP_SETTINGS=project.config.DevelopmentConfig
+      - ADMIN_NAMESPACE=/cooladmin
       - DATABASE_URL=postgresql://postgres:postgres@myproject-db:5432/myproject_dev
       - DATABASE_TEST_URL=postgresql://postgres:postgres@myproject-db:5432/myproject_test
     depends_on:
