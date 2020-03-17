@@ -1,10 +1,11 @@
-from project import, login_manager
+from project import db, login_manager
 
+from flask_login import UserMixin
 from sqlalchemy.sql import func
 from passlib.apps import custom_app_context as pwd_context
 
 
-class AdminUser(db.Model):
+class AdminUser(db.Model, UserMixin):
     __tablename__ = "admin_users"
 
     id = db.Column(db.BigInteger(), primary_key=True)
@@ -25,21 +26,3 @@ class AdminUser(db.Model):
 
     def verify_password(self, password):
         return pwd_context.verify(password, self.password_hash)
-
-    @property
-    def is_active(self):
-        return True
-
-    @property
-    def is_authenticated(self):
-        return True
-
-    @property
-    def is_anonymous(self):
-        return False
-
-    def get_id(self):
-        try:
-            return text_type(self.id)
-        except AttributeError:
-            raise NotImplementedError('No `id` attribute - override `get_id`')

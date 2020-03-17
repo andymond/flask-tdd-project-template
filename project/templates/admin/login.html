@@ -3,7 +3,7 @@
     <div class="row">
       <h1 class="col-md-offset-1">Log In</h1>
     </div>
-    <form method="POST" action="/" class = "admin-form form-horizontal">
+    <form method="POST" action="{{form.login_url}}" class = "admin-form form-horizontal">
       {{ form.csrf_token }}
       <div class="form-group">
         {{ form.username.label(class_="col-md-2 control-label") }}
