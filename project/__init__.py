@@ -17,18 +17,18 @@ def create_app():
     app.config.from_object(app_settings)
 
     db.init_app(app)
+    admin.init_app(app)
+
+    from project.api import api
+    api.init_app(app)
+
     login_manager.init_app(app)
+    login_manager.login_view = "project.api.admin_users.views"
     @login_manager.user_loader
     def load_user(user_id):
         from project.api.admin_users.models import AdminUser
         from project.services.db import base as db_service
-        db_service.find(AdminUser, id=user_id)
-
-    admin.init_app(app)
-
-    from project.api import api
-
-    api.init_app(app)
+        return db_service.find(AdminUser, id=user_id)
 
     @app.shell_context_processor
     def ctx():

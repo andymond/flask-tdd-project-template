@@ -1,4 +1,5 @@
 import os
+import flask_login
 from project.api.admin_users.models import AdminUser
 from project.services.db import base as db_service
 
@@ -18,5 +19,6 @@ def test_login_valid(test_app, test_database):
         content_type="multipart/form-data",
         follow_redirects=True
     )
+    assert flask_login.utils.current_user.is_authenticated
     assert resp.status_code == 200
     assert "Logged in" in str(resp.data)

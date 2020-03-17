@@ -20,6 +20,9 @@ services:
       - DATABASE_TEST_URL=postgresql://postgres:postgres@myproject-db:5432/myproject_test
     depends_on:
       - myproject-db
+    stdin_open: true
+    tty: true
+
 
   myproject-db:
     build:
