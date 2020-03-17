@@ -5,6 +5,8 @@ import click
 from flask.cli import FlaskGroup
 
 from project import create_app, db
+from project.services.db import base as db_service
+from project.api.admin_users.models import AdminUser
 
 
 app = create_app()
@@ -30,6 +32,13 @@ def recreate_db():
     db.drop_all()
     db.create_all()
     db.session.commit()
+
+@cli.command('createadmin')
+@click.argument('un')
+@click.argument('email')
+@click.argument('pw')
+def create_admin(un, email, pw):
+    db_service.create(AdminUser, username=un, email=email, password=pw, password_conf=pw)
 
 if __name__ == '__main__':
     cli()
